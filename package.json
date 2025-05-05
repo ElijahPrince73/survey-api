@@ -6,6 +6,14 @@
   "repository": "https://github.com/ElijahPrince73/survey-api.git",
   "author": "Elijah Prince <elijahprince73@gmail.com>",
   "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "start:prod": "NODE_ENV=production nodemon server.js",
+    "debug": "ndb server.js"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "bcryptjs": "^3.0.1",
