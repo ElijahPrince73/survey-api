@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { isEmail } from 'validator';
+import pkg from 'validator';
+const { isEmail } = pkg;
 
 const { Schema } = mongoose;
 
