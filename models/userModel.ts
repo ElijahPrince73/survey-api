@@ -5,6 +5,10 @@ const { isEmail } = pkg;
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, 'Please provide a name'],
+  },
   email: {
     type: String,
     unique: true,
@@ -20,6 +24,16 @@ const userSchema = new Schema({
       type: String,
       required: [true, 'Please provide a password'],
       minLength: 8,
+    },
+    passwordConfirm: {
+      type: String,
+      required: [true, 'Please confirm your password'],
+      validate: {
+        validator: function (el) {
+          return el === el.password;
+        },
+        message: 'Passwords must match',
+      },
     },
   },
 });
