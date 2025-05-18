@@ -34,11 +34,15 @@ const createSendtoken = (user, statusCode, res) => {
 };
 
 const signUp = catchAsync(async (req, res, next) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, passwordConfirm, role } = req.body;
 
-  const newUser = await User.create({ name, email, password, role });
-
-  console.log(newUser);
+  const newUser = await User.create({
+    name,
+    email,
+    password,
+    passwordConfirm,
+    role,
+  });
 
   createSendtoken(newUser, 201, res);
 });
