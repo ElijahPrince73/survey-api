@@ -3,9 +3,12 @@ import jwt from 'jsonwebtoken';
 
 import AppError from '../utils/appError.ts';
 import catchAsync from '../utils/catchAsync.ts';
+import { decode } from 'punycode';
 
 const signtoken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET);
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
 };
 
 const createSendToken = (user, statusCode, res) => {
@@ -65,4 +68,34 @@ const login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
-export { signUp, login };
+const protect = catchAsync(async (req, res, next) => {
+  const { authorization } = req.headers;
+  let token;
+
+  if (authorization && authorization.startsWith('Bearer')) {
+    token = authorization.split(' ')[1];
+  }
+
+  if (!token) {
+    new AppError('You are not logged in! Please log in to get access.', 401);
+  }
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      return next(
+        new AppError('Your token has expired. Please log in again.', 401),
+      );
+    }
+    return next(new AppError('Invalid token. Please log in again.', 401));
+  }
+
+  const freshUser = await User.findById(decoded.id);
+
+  req.user = freshUser;
+
+  next();
+});
+
+export { signUp, login, protect };
