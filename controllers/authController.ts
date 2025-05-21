@@ -98,4 +98,19 @@ const protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-export { signUp, login, protect };
+const restrictTo = (...roles) => {
+  return catchAsync(async (req, res, next) => {
+    // User will have role assigned to it with either user or admin
+    // We look at the roles array that come from certain routes.
+    // if have ['user'] on the roles allowed to access a certain route and the user making the request has the role of user. Grant access
+
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You dont have permission to perform this action', 403),
+      );
+    }
+    next();
+  });
+};
+
+export { signUp, login, protect, restrictTo };
