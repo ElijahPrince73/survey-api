@@ -25,8 +25,13 @@ const surveyTemplateSchema = new Schema({
   },
   questions: [questionSchema],
   createdBy: String,
-  createAt: {
+  createdAt: {
+    type: Date,
     default: Date.now(),
+  },
+  isActive: {
+    type: Boolean,
+    default: true,
   },
 });
 
