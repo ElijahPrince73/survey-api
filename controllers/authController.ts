@@ -3,7 +3,6 @@ import jwt from 'jsonwebtoken';
 
 import AppError from '../utils/appError.ts';
 import catchAsync from '../utils/catchAsync.ts';
-import { decode } from 'punycode';
 
 const signtoken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {

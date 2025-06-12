@@ -24,7 +24,11 @@ const surveyTemplateSchema = new Schema({
     required: [true, 'Please provide a description'],
   },
   questions: [questionSchema],
-  createdBy: String,
+  createdBy: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
