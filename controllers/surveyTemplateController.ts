@@ -7,6 +7,13 @@ const createSurveyTemplate = catchAsync(async (req, res, next) => {
   const { title, description, questions, isActive } = req.body;
   const { _id } = req.user;
 
+  // Deactivate survey that is already active
+  let surveyToDeactivate = await SurveyTemplate.findOne({ isActive: true });
+  if (surveyToDeactivate) {
+    surveyToDeactivate.isActive = false;
+    surveyToDeactivate.save();
+  }
+
   const newSurveyTemplate = await SurveyTemplate.create({
     title,
     description,
@@ -23,4 +30,30 @@ const createSurveyTemplate = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createSurveyTemplate };
+const activateSurvey = catchAsync(async (req, res, next) => {
+  const { surveyId } = req.params;
+
+  let surveyToUpdate = await SurveyTemplate.findById(surveyId);
+
+  // Deactivate survey that is already active
+  let surveyToDeactivate = await SurveyTemplate.findOne({ isActive: true });
+  if (surveyToDeactivate) {
+    surveyToDeactivate.isActive = false;
+    surveyToDeactivate.save();
+  }
+
+  if (surveyToUpdate) {
+    surveyToUpdate.isActive = true;
+  }
+
+  surveyToUpdate?.save();
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      surveyToUpdate,
+    },
+  });
+});
+
+export { createSurveyTemplate, activateSurvey };
