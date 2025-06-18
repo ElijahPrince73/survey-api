@@ -3,6 +3,7 @@ import { protect, restrictTo } from '../controllers/authController.ts';
 import {
   createSurveyTemplate,
   activateSurvey,
+  getActveSurvey,
 } from '../controllers/surveyTemplateController.ts';
 
 const router = express.Router();
@@ -14,5 +15,6 @@ router.post(
   restrictTo('admin'),
   activateSurvey,
 );
+router.get('/active', protect, getActveSurvey);
 
 export default router;

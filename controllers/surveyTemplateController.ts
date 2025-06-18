@@ -56,4 +56,15 @@ const activateSurvey = catchAsync(async (req, res, next) => {
   });
 });
 
-export { createSurveyTemplate, activateSurvey };
+const getActveSurvey = catchAsync(async (req, res) => {
+  let activeSurvey = await SurveyTemplate.findOne({ isActive: true });
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      activeSurvey,
+    },
+  });
+});
+
+export { createSurveyTemplate, activateSurvey, getActveSurvey };
