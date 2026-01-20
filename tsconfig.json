@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    // You might also need this for importing other .ts files
+    "allowImportingTsExtensions": true
+  }
+}

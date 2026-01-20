@@ -5,12 +5,11 @@
   "repository": "https://github.com/ElijahPrince73/survey-api.git",
   "author": "Elijah Prince <elijahprince73@gmail.com>",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon server.ts",
-    "start": "node server.ts",
-    "start:prod": "NODE_ENV=production nodemon server.js",
+    "dev": "tsx watch server.ts",
+    "start": "tsx server.ts",
+    "start:prod": "NODE_ENV=production tsx server.js",
     "debug": "ndb server.js"
   },
   "dependencies": {
@@ -46,6 +45,7 @@
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.34.1",
     "prettier": "^3.2.5",
-    "typescript": "^5.8.3"
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }
