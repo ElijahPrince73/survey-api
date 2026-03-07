@@ -67,4 +67,15 @@ const getActveSurvey = catchAsync(async (req, res) => {
   });
 });
 
-export { createSurveyTemplate, activateSurvey, getActveSurvey };
+const getAllActiveSurveyTempalates = catchAsync(async (req, res) => {
+  let activeSurveyTemplates = await SurveyTemplate.find();
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      activeSurveyTemplates,
+    },
+  });
+});
+
+export { createSurveyTemplate, activateSurvey, getActveSurvey, getAllActiveSurveyTempalates };

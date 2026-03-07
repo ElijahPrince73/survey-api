@@ -4,7 +4,8 @@ const app = express();
 
 // import user from './routes/userRoutes.ts';
 import authenthication from './routes/authRoutes.ts';
-import surveys from './routes/survey.ts';
+import surveysTemplate from './routes/surveyTemplate.ts';
+import surveyResponse from './routes/surveyResponses.ts';
 
 // Dev Logging
 if (process.env.NODE_ENV === 'development') {
@@ -18,7 +19,7 @@ app.use(
   }),
 );
 
-app.use('/api/v1/authentication', authenthication);
-app.use('/api/v1/surveys', surveys);
+app.use('/api/authentication', authenthication);
+app.use('/api/surveys', surveysTemplate, surveyResponse);
 
 export default app;
