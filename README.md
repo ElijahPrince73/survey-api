@@ -83,6 +83,39 @@
 
 ---
 
+### Survey Responses Routes (`/api/surveys/:surveyId/responses`)
+
+#### 1. Submit Survey Response
+- **Endpoint:** `POST /api/surveys/:surveyId/responses`
+- **Middleware:** 
+  - `protect` - Requires valid JWT token
+- **URL Parameters:**
+  - `surveyId` - MongoDB ObjectId of the survey
+- **Request Body:**
+  ```json
+  {
+    "answers": "array"
+  }
+  ```
+- **Response:** `201 Created`
+  - Returns newly created survey response
+  - Prevents duplicate submissions from the same user
+- **Controller:** `createSurveyResponse` in `surveyResponsesController.ts`
+- **Error Handling:**
+  - Returns 400 if user has already submitted a response for this survey
+
+#### 2. Get Survey Responses
+- **Endpoint:** `GET /api/surveys/:surveyId/responses`
+- **Middleware:** 
+  - `protect` - Requires valid JWT token
+  - `restrictTo('admin')` - Only admin users can access
+- **Response:** `200 OK`
+  - Returns array of all survey responses
+  - Includes result count
+- **Controller:** `getSurveyResponses` in `surveyResponsesController.ts`
+
+---
+
 ## Middleware Documentation
 
 ### `protect` Middleware
